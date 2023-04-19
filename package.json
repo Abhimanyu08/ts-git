@@ -1,0 +1,26 @@
+{
+	"name": "ts-git",
+	"version": "1.0.0",
+	"description": "minimal git in typescript",
+	"main": "dist/ts-git.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Abhimanyu08/ts-git.git"
+	},
+	"keywords": [
+		"git",
+		"ts-git"
+	],
+	"author": "Abhimanyu",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Abhimanyu08/ts-git/issues"
+	},
+	"homepage": "https://github.com/Abhimanyu08/ts-git#readme",
+	"devDependencies": {
+		"@types/node": "^18.15.11"
+	}
+}
