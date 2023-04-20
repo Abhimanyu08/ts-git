@@ -2,31 +2,36 @@
 // creating folders, files, and writing content to that file easy.
 
 import { cwd } from "process"
-import { mkdirSync, write } from "fs"
+import { existsSync, mkdirSync, write } from "fs"
 import { writeFile } from "fs/promises"
 
 //A good abstraction of our filesystem can be a map. The keys of the map are names of files and folders. If value for a key
 //is an object then it's a folder name, if it's a string then it's a filename.
 
-interface FileStructure {
-    [key: string]: string | FileStructure
+export interface FileTree {
+    [key: string]: string | FileTree
 }
 
-export const createFiles = ({ rootPath, structure }: { rootPath: string, structure: FileStructure }) => {
+export const treeToFiles = ({ rootPath, fileTree: structure }: { rootPath?: string, fileTree: FileTree }) => {
+
+    if (!rootPath) rootPath = cwd()
 
     for (let [key, val] of Object.entries(structure)) {
 
-        const objectName = `${rootPath}/${key}`
+        const objectPath = `${rootPath}/${key}`
 
         if (typeof val === "string") {
 
-            writeFile(objectName, val)
+            writeFile(objectPath, val)
             continue
         }
 
-        mkdirSync(objectName)
+        if (!existsSync(objectPath)) {
 
-        createFiles({ rootPath: objectName, structure: val })
+            mkdirSync(objectPath)
+        }
+
+        treeToFiles({ rootPath: objectPath, fileTree: val })
     }
 
 }

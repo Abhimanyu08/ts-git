@@ -1,21 +1,24 @@
 import { existsSync, mkdirSync } from "fs";
 import { cwd, exit } from "process";
-import { createFiles } from "../filecommands";
+import { treeToFiles } from "../filecommands";
 
 export function init() {
 
     const currentWorkingDir = cwd()
-    // init doesn't take in any arguments. It just initializes a .git folder with following structure (if the cwd doesn't already have one)
+    // init doesn't take in any arguments. It just initializes a .tsgit folder with following structure (if the cwd doesn't already have one)
     // .git
     //    objects -empty folder
     //    HEAD -file
     //    refs
     //      heads -empty folder
 
+    if (existsSync(`${currentWorkingDir}/.tsgit`)) {
+        console.log("already a tsgit repository")
+        exit(0)
+    }
 
-    createFiles({
-        rootPath: currentWorkingDir,
-        structure: {
+    treeToFiles({
+        fileTree: {
             ".tsgit": {
                 "objects": {},
                 "HEAD": "ref: refs/heads/master",
